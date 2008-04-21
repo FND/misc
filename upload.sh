@@ -1,5 +1,5 @@
 # Usage:
-#  upload.sh user@host localFile remoteDir
+#  upload.sh [user@]host localFile remoteDir
 #
 # To Do:
 # * support multiple files
