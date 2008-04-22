@@ -7,9 +7,9 @@ PS3="XAMPP - Select action: "
 OPTIONS="start stop"
 select i in $OPTIONS; do 
 	if [ "$i" = "start" ]; then
-		/opt/lampp/lampp start
+		sudo /opt/lampp/lampp start
 	elif [ "$i" = "stop" ]; then
-		/opt/lampp/lampp start
+		sudo /opt/lampp/lampp stop
 	fi
 	exit
 done
