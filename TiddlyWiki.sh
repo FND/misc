@@ -5,7 +5,7 @@
 
 DIR="/tmp"
 
-PS3="Select action: "
+PS3="TiddlyWiki - Select action: "
 OPTIONS="empty nightly"
 select i in $OPTIONS; do 
 	if [ "$i" = "empty" ]; then
