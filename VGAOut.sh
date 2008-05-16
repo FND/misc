@@ -8,12 +8,25 @@ function VGAOut() {
 	fi
 }
 
+function panelPos() {
+	if [ $1 = true ]; then
+		gconftool-2 -t int -s /apps/panel/toplevels/top_panel_screen0/monitor 1
+		gconftool-2 -t int -s /apps/panel/toplevels/panel_2/monitor 1
+	elif [ $1 = false ]; then
+		gconftool-2 -t int -s /apps/panel/toplevels/top_panel_screen0/monitor 0
+		gconftool-2 -t int -s /apps/panel/toplevels/panel_2/monitor 0
+	fi
+}
+
+
 # command-line parameter
 if [ $1 = "e" ]; then
 	VGAOut true
+	panelPos true
 	exit
 elif [ $1 = "d" ]; then
 	VGAOut false
+	panelPos false
 	exit
 fi
 
