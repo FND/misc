@@ -1,34 +1,32 @@
 #!/bin/bash
 
-# NOTE:  Todo.sh requires the .todo configuration file to run.
+# NOTE: Todo.sh requires the .todo configuration file to run.
 # Place the .todo file in your home directory or use the -d option for a custom location.
 
 version() { sed -e 's/^    //' <<EndVersion
         TODO.TXT Manager
         Version 1.7.3
-        Author:  Gina Trapani (ginatrapani@gmail.com)
-        Release date:  5/11/2006
-        Last updated:  7/29/2006
-        License:  GPL, http://www.gnu.org/copyleft/gpl.html
+        Author: Gina Trapani (ginatrapani@gmail.com)
+        Release date: 5/11/2006
+        Last updated: 7/29/2006
+        License: GPL, http://www.gnu.org/copyleft/gpl.html
         More information and mailing list at http://todotxt.com
 EndVersion
     exit 1
 }
 
-usage()
-{
-    sed -e 's/^    //' <<EndUsage 
-    Usage: todo.sh  [-fhpqvV] [-d todo_config] action [task_number] [task_description]
-    Try 'todo.sh -h' for more information.    
+usage() {
+    sed -e 's/^    //' <<EndUsage
+    Usage: todo.sh [-fhpqvV] [-d todo_config] action [task_number] [task_description]
+    Try 'todo.sh -h' for more information.
 EndUsage
     exit 1
 }
 
 
-help()
-{ 
+help() {
     sed -e 's/^    //' <<EndHelp
-      Usage:  todo.sh [-fhpqvV] [-d todo_config] action [task_number] [task_description]
+      Usage: todo.sh [-fhpqvV] [-d todo_config] action [task_number] [task_description]
 
       Actions:
         add "THING I NEED TO DO p:project @context"
@@ -52,15 +50,15 @@ help()
         do NUMBER
           Marks item on line NUMBER as done in todo.txt.
 
-        list [TERM...] 
+        list [TERM...]
         ls [TERM...]
           Displays all todo's that contain TERM(s) sorted by priority with line
-          numbers.  If no TERM specified, lists entire todo.txt.
+          numbers. If no TERM specified, lists entire todo.txt.
 
         listall [TERM...]
         lsa [TERM...]
           Displays all the lines in todo.txt AND done.txt that contain TERM(s)
-          sorted by priority with line  numbers.  If no TERM specified, lists
+          sorted by priority with line numbers. If no TERM specified, lists
           entire todo.txt AND done.txt concatenated and sorted.
 
         listpri [PRIORITY]
@@ -75,7 +73,7 @@ help()
 
         pri NUMBER PRIORITY
         p NUMBER PRIORITY
-          Adds PRIORITY to todo on line NUMBER.  If the item is already
+          Adds PRIORITY to todo on line NUMBER. If the item is already
           prioritized, replaces current priority with new PRIORITY.
           PRIORITY must be an uppercase letter between A and Z.
 
@@ -97,30 +95,27 @@ help()
             Display this help message
         -p
             Plain mode turns off colors
-        -v 
+        -v
             Verbose mode turns on confirmation messages
-        -V 
+        -V
             Displays version, license and credits
 EndHelp
-
     exit 1
 }
 
-die()
-{
+die() {
     echo "$*"
     exit 1
 }
 
-cleanup()
-{
+cleanup() {
     [ -f "$TMP_FILE" ] && rm "$TMP_FILE"
     exit 0
 }
 
-
 # == PROCESS OPTIONS ==
-# defaults
+
+# default settings
 VERBOSE=0
 PLAIN=0
 CFG_FILE=$HOME/.todo
@@ -129,7 +124,7 @@ FORCE=0
 while getopts ":fhpqvVd:" Option
 do
   case $Option in
-    d)  
+    d)
 	CFG_FILE=$OPTARG
 	;;
 	f)
@@ -139,12 +134,12 @@ do
 	help
 	;;
     p )
-	PLAIN=1 
+	PLAIN=1
 	;;
-    q ) 
+    q )
 	QUIET=1
 	;;
-    v ) 
+    v )
 	VERBOSE=1
 	;;
     V)
@@ -155,15 +150,15 @@ done
 shift $(($OPTIND - 1))
 
 # === SANITY CHECKS (thanks Karl!) ===
-[ -r "$CFG_FILE" ] || die "Fatal error:  Cannot read configuration file $CFG_FILE"
+[ -r "$CFG_FILE" ] || die "Fatal error: Cannot read configuration file $CFG_FILE"
 
 . "$CFG_FILE"
 
-[ -z "$1" ]         && usage
-[ -d "$TODO_DIR" ]  || die "Fatal Error: $TODO_DIR is not a directory"  
-cd "$TODO_DIR"      || die "Fatal Error: Unable to cd to $TODO_DIR"
+[ -z "$1" ] && usage
+[ -d "$TODO_DIR" ] || die "Fatal Error: $TODO_DIR is not a directory"
+cd "$TODO_DIR" || die "Fatal Error: Unable to cd to $TODO_DIR"
 
-echo '' > "$TMP_FILE" || die "Fatal Error:  Unable to write in $TODO_DIR"  
+echo '' > "$TMP_FILE" || die "Fatal Error: Unable to write in $TODO_DIR"
 [ -f "$TODO_FILE" ] || cp /dev/null "$TODO_FILE"
 [ -f "$DONE_FILE" ] || cp /dev/null "$DONE_FILE"
 [ -f "$REPORT_FILE" ] || cp /dev/null "$REPORT_FILE"
@@ -183,7 +178,7 @@ shopt -s extglob
 # == HANDLE ACTION ==
 action=$( printf "%s\n" "$1" | tr 'A-Z' 'a-z' )
 
-case $action in 
+case $action in
 "add" | "a")
 	if [[ -z "$2" && $FORCE = 0 ]]; then
 		echo -n "Add: "
@@ -218,7 +213,7 @@ case $action in
 		        NEWTODO=$(sed "$item!d" "$TODO_FILE")
 		        [[ $VERBOSE = 1 ]] && echo "$item: $NEWTODO"
 		else
-			echo "TODO:  Error appending task $item."
+			echo "TODO: Error appending task $item."
 		fi
 	else
 		echo "$item: No such todo."
@@ -230,7 +225,7 @@ case $action in
 	grep "^x " "$TODO_FILE" >> "$DONE_FILE"
 	sed -i.bak '/^x /d' "$TODO_FILE"
         [[ $VERBOSE = 1 ]] && echo "--"
-        [[ $VERBOSE = 1 ]] && echo "TODO:  Items marked as done have been moved from $TODO_FILE to $DONE_FILE."
+        [[ $VERBOSE = 1 ]] && echo "TODO: Items marked as done have been moved from $TODO_FILE to $DONE_FILE."
 	cleanup;;
 
 "del" | "rm" )
@@ -242,7 +237,7 @@ case $action in
 		DELETEME=$(sed "$2!d" "$TODO_FILE")
 
 		if  [ $FORCE = 0 ]; then
-		    echo "Delete '$DELETEME'?  (y/n)"
+		    echo "Delete '$DELETEME'? (y/n)"
 			read ANSWER
 		else
 			ANSWER="y"
@@ -250,10 +245,10 @@ case $action in
 		
 	    if [ "$ANSWER" = "y" ]; then
 		       sed -i.bak -e $2"s/^.*//" -e '/./!d' "$TODO_FILE"
-		       [[ $VERBOSE = 1 ]] && echo "TODO:  '$DELETEME' deleted."
+		       [[ $VERBOSE = 1 ]] && echo "TODO: '$DELETEME' deleted."
 		       cleanup
 		else
-			echo "TODO:  No tasks were deleted."
+			echo "TODO: No tasks were deleted."
 		fi
 	else
 		echo "$item: No such todo."
@@ -275,7 +270,7 @@ case $action in
 	        [[ $VERBOSE = 1 ]] && echo "TODO: $item marked as done."
 		cleanup
 	else
-		echo "$item:  No such todo."
+		echo "$item: No such todo."
 	fi ;;
 
 "list" | "ls" )
@@ -322,8 +317,8 @@ case $action in
 "listpri" | "lsp" )
 	pri=$( printf "%s\n" "$2" | tr 'a-z' 'A-Z' )
 
-	errmsg="usage: $0 listpri PRIORITY  
-note:  PRIORITY must a single letter from A to Z."
+	errmsg="usage: $0 listpri PRIORITY
+note: PRIORITY must a single letter from A to Z."
 
 	if [ -z "$pri" ]; then
 		echo -e "`sed = "$TODO_FILE" | sed 'N; s/^/  /; s/ *\(.\{2,\}\)\n/\1 /' | sed 's/^ /0/' | sort -f -k2 |  sed 's/^ /0/' | sort -f -k2 | sed '/^[0-9][0-9] x /!s/\(.*(A).*\)/'$PRI_A'\1'$DEFAULT'/g' | sed '/^[0-9][0-9] x /!s/\(.*(B).*\)/'$PRI_B'\1'$DEFAULT'/g' | sed '/^[0-9][0-9] x /!s/\(.*(C).*\)/'$PRI_C'\1'$DEFAULT'/g' | sed '/^[0-9][0-9] x /!s/\(.*([A-Z]).*\)/'$PRI_X'\1'$DEFAULT'/'`" | grep \([A-Z]\)
@@ -365,7 +360,7 @@ note:  PRIORITY must a single letter from A to Z."
 		        NEWTODO=$(sed "$item!d" "$TODO_FILE")
 		        echo "$item: $NEWTODO"
 		else
-			echo "TODO:  Error prepending task $item."
+			echo "TODO: Error prepending task $item."
 		fi
 	else
 		echo "$item: No such todo."
@@ -375,8 +370,8 @@ note:  PRIORITY must a single letter from A to Z."
 	item=$2
 	newpri=$( printf "%s\n" "$3" | tr 'a-z' 'A-Z' )
 
-	errmsg="usage: $0 pri ITEM# PRIORITY  
-note:  PRIORITY must be anywhere from A to Z."
+	errmsg="usage: $0 pri ITEM# PRIORITY
+note: PRIORITY must be anywhere from A to Z."
 
 	[ "$#" -ne 3 ] && die "$errmsg"
 	[[ "$item" = +([0-9]) ]] || die "$errmsg"
@@ -439,7 +434,7 @@ note:  PRIORITY must be anywhere from A to Z."
 	TECHO=$(echo $(date +%Y-%m-%d-%T); echo ' '; echo $TOTAL; echo ' ';
 	echo $TDONE)
 	echo $TECHO >> "$REPORT_FILE"
-	[[ $VERBOSE = 1 ]] && echo "TODO:  Report file updated."
+	[[ $VERBOSE = 1 ]] && echo "TODO: Report file updated."
 	cat "$REPORT_FILE"
 	cleanup;;
 * )
