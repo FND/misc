@@ -28,77 +28,77 @@ help() {
 	sed -e 's/^\t//' <<EndHelp
 		Usage: todo.sh [-fhpqvV] [-d todo_config] action [task_number] [task_description]
 
-      Actions:
-        add "THING I NEED TO DO p:project @context"
-        a "THING I NEED TO DO p:project @context"
-          Adds TODO ITEM to your todo.txt.
-          Project and context notation optional.
-          Quotes optional.
+		Actions:
+			add "THING I NEED TO DO p:project @context"
+			a "THING I NEED TO DO p:project @context"
+				Adds TODO ITEM to your todo.txt.
+				Project and context notation optional.
+				Quotes optional.
 
-        append NUMBER "TEXT TO APPEND"
-        app NUMBER "TEXT TO APPEND"
-          Adds TEXT TO APPEND to the end of the todo on line NUMBER.
-          Quotes optional.
+			append NUMBER "TEXT TO APPEND"
+			app NUMBER "TEXT TO APPEND"
+				Adds TEXT TO APPEND to the end of the todo on line NUMBER.
+				Quotes optional.
 
-        archive
-          Moves done items from todo.txt to done.txt.
+			archive
+				Moves done items from todo.txt to done.txt.
 
-        del NUMBER
-        rm NUMBER
-          Deletes the item on line NUMBER in todo.txt.
+			del NUMBER
+			rm NUMBER
+				Deletes the item on line NUMBER in todo.txt.
 
-        do NUMBER
-          Marks item on line NUMBER as done in todo.txt.
+			do NUMBER
+				Marks item on line NUMBER as done in todo.txt.
 
-        list [TERM...]
-        ls [TERM...]
-          Displays all todo's that contain TERM(s) sorted by priority with line
-          numbers. If no TERM specified, lists entire todo.txt.
+			list [TERM...]
+			ls [TERM...]
+				Displays all todo's that contain TERM(s) sorted by priority with line
+				numbers. If no TERM specified, lists entire todo.txt.
 
-        listall [TERM...]
-        lsa [TERM...]
-          Displays all the lines in todo.txt AND done.txt that contain TERM(s)
-          sorted by priority with line numbers. If no TERM specified, lists
-          entire todo.txt AND done.txt concatenated and sorted.
+			listall [TERM...]
+			lsa [TERM...]
+				Displays all the lines in todo.txt AND done.txt that contain TERM(s)
+				sorted by priority with line numbers. If no TERM specified, lists
+				entire todo.txt AND done.txt concatenated and sorted.
 
-        listpri [PRIORITY]
-        lsp [PRIORITY]
-          Displays all items prioritized PRIORITY.
-          If no PRIORITY specified, lists all prioritized items.
+			listpri [PRIORITY]
+			lsp [PRIORITY]
+				Displays all items prioritized PRIORITY.
+				If no PRIORITY specified, lists all prioritized items.
 
-        prepend NUMBER "TEXT TO PREPEND"
-        prep NUMBER "TEXT TO PREPEND"
-          Adds TEXT TO PREPEND to the beginning of the todo on line NUMBER.
-          Quotes optional.
+			prepend NUMBER "TEXT TO PREPEND"
+			prep NUMBER "TEXT TO PREPEND"
+				Adds TEXT TO PREPEND to the beginning of the todo on line NUMBER.
+				Quotes optional.
 
-        pri NUMBER PRIORITY
-        p NUMBER PRIORITY
-          Adds PRIORITY to todo on line NUMBER. If the item is already
-          prioritized, replaces current priority with new PRIORITY.
-          PRIORITY must be an uppercase letter between A and Z.
+			pri NUMBER PRIORITY
+			p NUMBER PRIORITY
+				Adds PRIORITY to todo on line NUMBER. If the item is already
+				prioritized, replaces current priority with new PRIORITY.
+				PRIORITY must be an uppercase letter between A and Z.
 
-        replace NUMBER "UPDATED TODO"
-          Replaces todo on line NUMBER with UPDATED TODO.
+			replace NUMBER "UPDATED TODO"
+				Replaces todo on line NUMBER with UPDATED TODO.
 
-        remdup
-          Removes exact duplicate lines from todo.txt.
+			remdup
+				Removes exact duplicate lines from todo.txt.
 
-        report
-          Adds the number of open todo's and closed done's to report.txt.
+			report
+				Adds the number of open todo's and closed done's to report.txt.
 
-      Options:
-        -d CONFIG_FILE
-            Use a configuration file other than the default ~/.todo
-        -f
-        	Forces actions without confirmation or interactive input
-        -h
-            Display this help message
-        -p
-            Plain mode turns off colors
-        -v
-            Verbose mode turns on confirmation messages
-        -V
-            Displays version, license and credits
+		Options:
+			-d CONFIG_FILE
+				Use a configuration file other than the default ~/.todo
+			-f
+				Forces actions without confirmation or interactive input
+			-h
+				Display this help message
+			-p
+				Plain mode turns off colors
+			-v
+				Verbose mode turns on confirmation messages
+			-V
+				Displays version, license and credits
 EndHelp
 	exit 1
 }
@@ -322,7 +322,7 @@ case $action in
 note: PRIORITY must a single letter from A to Z."
 
 	if [ -z "$pri" ]; then
-		echo -e "`sed = "$TODO_FILE" | sed 'N; s/^/  /; s/ *\(.\{2,\}\)\n/\1 /' | sed 's/^ /0/' | sort -f -k2 |  sed 's/^ /0/' | sort -f -k2 | sed '/^[0-9][0-9] x /!s/\(.*(A).*\)/'$PRI_A'\1'$DEFAULT'/g' | sed '/^[0-9][0-9] x /!s/\(.*(B).*\)/'$PRI_B'\1'$DEFAULT'/g' | sed '/^[0-9][0-9] x /!s/\(.*(C).*\)/'$PRI_C'\1'$DEFAULT'/g' | sed '/^[0-9][0-9] x /!s/\(.*([A-Z]).*\)/'$PRI_X'\1'$DEFAULT'/'`" | grep \([A-Z]\)
+		echo -e "`sed = "$TODO_FILE" | sed 'N; s/^/  /; s/ *\(.\{2,\}\)\n/\1 /' | sed 's/^ /0/' | sort -f -k2 | sed 's/^ /0/' | sort -f -k2 | sed '/^[0-9][0-9] x /!s/\(.*(A).*\)/'$PRI_A'\1'$DEFAULT'/g' | sed '/^[0-9][0-9] x /!s/\(.*(B).*\)/'$PRI_B'\1'$DEFAULT'/g' | sed '/^[0-9][0-9] x /!s/\(.*(C).*\)/'$PRI_C'\1'$DEFAULT'/g' | sed '/^[0-9][0-9] x /!s/\(.*([A-Z]).*\)/'$PRI_X'\1'$DEFAULT'/'`" | grep \([A-Z]\)
 		if [ $VERBOSE = 1 ]; then
 			echo "--"
 			NUMTASKS=$(grep \([A-Z]\) "$TODO_FILE" | wc -l | sed 's/^[[:space:]]*\([0-9]*\).*/\1/')
@@ -331,7 +331,7 @@ note: PRIORITY must a single letter from A to Z."
 	else
 		[[ "$pri" = +([A-Z]) ]] || die "$errmsg"
 
-		echo -e "`sed = "$TODO_FILE" | sed 'N; s/^/  /; s/ *\(.\{2,\}\)\n/\1 /' | sed 's/^ /0/' |  sort -f -k2 |  sed 's/^ /0/' | sort -f -k2 | sed '/^[0-9][0-9] x /!s/\(.*(A).*\)/'$PRI_A'\1'$DEFAULT'/g' | sed '/^[0-9][0-9] x /!s/\(.*(B).*\)/'$PRI_B'\1'$DEFAULT'/g' | sed '/^[0-9][0-9] x /!s/\(.*(C).*\)/'$PRI_C'\1'$DEFAULT'/g' | sed '/^[0-9][0-9] x /!s/\(.*([A-Z]).*\)/'$PRI_X'\1'$DEFAULT'/'`" | grep \($pri\)
+		echo -e "`sed = "$TODO_FILE" | sed 'N; s/^/  /; s/ *\(.\{2,\}\)\n/\1 /' | sed 's/^ /0/' | sort -f -k2 | sed 's/^ /0/' | sort -f -k2 | sed '/^[0-9][0-9] x /!s/\(.*(A).*\)/'$PRI_A'\1'$DEFAULT'/g' | sed '/^[0-9][0-9] x /!s/\(.*(B).*\)/'$PRI_B'\1'$DEFAULT'/g' | sed '/^[0-9][0-9] x /!s/\(.*(C).*\)/'$PRI_C'\1'$DEFAULT'/g' | sed '/^[0-9][0-9] x /!s/\(.*([A-Z]).*\)/'$PRI_X'\1'$DEFAULT'/'`" | grep \($pri\)
 		if [ $VERBOSE = 1 ]; then
 			echo "--"
 			NUMTASKS=$(grep \($pri\) "$TODO_FILE" | wc -l | sed 's/^[[:space:]]*\([0-9]*\).*/\1/')
