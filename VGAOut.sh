@@ -20,11 +20,11 @@ function panelPos() {
 
 
 # command-line parameter
-if [ $1 = "e" ]; then
+if [ "x$1" = "xe" ]; then
 	VGAOut true
 	panelPos true
 	exit
-elif [ $1 = "d" ]; then
+elif [ "x$1" = "xd" ]; then
 	VGAOut false
 	panelPos false
 	exit
