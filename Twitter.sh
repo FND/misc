@@ -1,6 +1,7 @@
 # To Do
 # * concatenate parameters $2-$n (i.e. no need for quotes)
 # * prompt for confirmation when >140 chars
+# * handle special chars (e.g. quotes, plus etc.)
 
 if [ ${#2} -le 0 ]; then
 	echo "Error: missing password"	
