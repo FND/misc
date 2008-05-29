@@ -14,10 +14,10 @@ function XAMPP() {
 }
 
 # command-line parameter
-if [ $1 = "e" ]; then
+if [ "x$1" = "xe" ]; then
 	XAMPP true
 	exit
-elif [ $1 = "d" ]; then
+elif [ "x$1" = "xd" ]; then
 	XAMPP false
 	exit
 fi
