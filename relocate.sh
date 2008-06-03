@@ -1,6 +1,6 @@
 function relocate() {
-	mv $1 $2
-	ln -s $2 $1
+	mv "$1" "$2"
+	ln -s "$2" "$1"
 }
 
 # command-line parameter
