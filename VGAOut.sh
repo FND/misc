@@ -36,9 +36,11 @@ OPTIONS="enable disable"
 select i in $OPTIONS; do
 	if [ "$i" = "enable" ]; then
 		VGAOut true
+		panelPos true
 		exit
 	elif [ "$i" = "disable" ]; then
 		VGAOut false
+		panelPos false
 		exit
 	fi
 done
