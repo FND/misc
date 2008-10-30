@@ -1,0 +1,3 @@
+import SimpleHTTPServer
+
+SimpleHTTPServer.test()

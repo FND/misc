@@ -18,7 +18,6 @@ function panelPos() {
 	fi
 }
 
-
 # command-line parameter
 if [ "x$1" = "xe" ]; then
 	VGAOut true
