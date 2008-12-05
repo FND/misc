@@ -1,13 +1,18 @@
 # To Do
-# * concatenate parameters $3-$n (i.e. no need for quotes)
 # * prompt for confirmation when >140 chars
 # * handle special chars (e.g. quotes, plus etc.)
 
-if [ ${#3} -le 0 ]; then
-	echo "Error: missing password"	
-elif [ ${#3} -gt 140 ]; then
-	echo "Error: message too long (${#2} characters)"
+username=$1
+shift
+password=$1
+shift
+message=$@
+
+if [ ${#message} -le 0 ]; then
+	echo "Error: missing username/password"
+elif [ ${#message} -gt 140 ]; then
+	echo "Error: message too long (${#message} characters)"
 else
-	echo "Posting: $3 (${#3} characters)"
-	curl -u $1:$2 -d status="$3" http://twitter.com/statuses/update.xml
+	echo "Posting: $message (${#message} characters)"
+	#curl -u $username:$password -d status="$message" http://twitter.com/statuses/update.xml
 fi
