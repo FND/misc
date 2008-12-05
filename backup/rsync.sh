@@ -7,13 +7,12 @@ else
 fi
 
 # log start time
-date > /tmp/backup_log
+STARTTIME=$(date +"%Y-%m-%d %H:%M:%S")
 
 cd ~/Scripts/backup/
 rsync -a -e -v --progress ~ /mnt/backup/fnd/rsync/ --exclude-from="exclude.lst"
 
-# log end time
-date >> /tmp/backup_log
+# output duration
+echo "started: $STARTTIME"
+echo "ended  : $(date +'%Y-%m-%d %H:%M:%S')"
 
-# output log
-cat /tmp/backup_log
