@@ -10,11 +10,9 @@ function VGAOut() {
 
 function panelPos() {
 	if [ $1 = true ]; then
-		gconftool-2 -t int -s /apps/panel/toplevels/top_panel_screen0/monitor 1
-		gconftool-2 -t int -s /apps/panel/toplevels/panel_2/monitor 1
+		gconftool-2 -t int -s /apps/panel/toplevels/bottom_panel_screen0/monitor 1
 	elif [ $1 = false ]; then
-		gconftool-2 -t int -s /apps/panel/toplevels/top_panel_screen0/monitor 0
-		gconftool-2 -t int -s /apps/panel/toplevels/panel_2/monitor 0
+		gconftool-2 -t int -s /apps/panel/toplevels/bottom_panel_screen0/monitor 0
 	fi
 }
 
