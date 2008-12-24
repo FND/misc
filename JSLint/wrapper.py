@@ -4,7 +4,7 @@ import re
 
 # settings -- TODO: read from configuration file
 cmd = "rhino"
-lint = "/usr/share/jslint/jslint.js"
+lint = "/home/fnd/Scripts/JSLint/jslint.js"
 pattern = r"Lint at line (\d+) character (\d+): (.*)"
 
 def main(args):
