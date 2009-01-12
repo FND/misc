@@ -20,7 +20,7 @@ cd ~/Scripts/backup/
 rsync -a -e -v --progress ~ $BACKUPDIR/current/ --exclude-from="exclude.lst"
 
 # log end time and duration
-STARTTIME=$(date +"%Y-%m-%d %H:%M:%S")
+ENDTIME=$(date +"%Y-%m-%d %H:%M:%S")
 echo "started: $STARTTIME"
-echo "ended  : $(date +'%Y-%m-%d %H:%M:%S')"
+echo "ended  : $ENDTIME"
 echo "start: $STARTTIME - end: $ENDTIME" >> $BACKUPDIR/backup.log
