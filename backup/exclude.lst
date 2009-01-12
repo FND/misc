@@ -1,6 +1,4 @@
 .local/share/Trash
 Downloads
 
-# exclude legacy baggage
-ies4linux-2.99.0.1
-pidgin-2.2.1
+.tilda/locks
