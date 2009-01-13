@@ -1,0 +1,23 @@
+# data
+
+.ssh
+
+.mozilla-thunderbird
+.mozilla/firefox
+.purple
+.xchat2
+
+Documents
+Scripts
+Desktop
+#Dev
+
+# settings
+
+.alias
+.bashrc
+.inputrc
+.xstartup
+
+.todo
+.gitconfig
