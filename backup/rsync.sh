@@ -16,8 +16,9 @@ mv $BACKUPDIR/alt $BACKUPDIR/current
 mv $BACKUPDIR/tmp $BACKUPDIR/alt
 
 # start sync'ing
+SOURCEDIR="~"
 cd ~/Scripts/backup/
-rsync -a -e -v --progress ~ $BACKUPDIR/current/ --exclude-from="exclude.lst"
+rsync -a -e -v --progress $SOURCEDIR $BACKUPDIR/current/ --exclude-from="exclude.lst"
 
 # log end time and duration
 ENDTIME=$(date +"%Y-%m-%d %H:%M:%S")
