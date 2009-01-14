@@ -8,10 +8,10 @@
 # check mode
 if [ "$1" = "full" ]; then
 	MODE=$1
-	BACKUPDIR="/mnt/backup/backup/fnd_minimal"
+	BACKUPDIR="/mnt/backup/backup/fnd"
 elif [ "$1" = "minimal" ];
 	MODE=$1
-	BACKUPDIR="/mnt/backup/backup/fnd"
+	BACKUPDIR="/mnt/backup/backup/fnd_minimal"
 else
 	echo "ERROR: no mode specified"
 	exit
