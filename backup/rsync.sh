@@ -9,7 +9,7 @@
 if [ "$1" = "full" ]; then
 	MODE=$1
 	BACKUPDIR="/mnt/backup/backup/fnd"
-elif [ "$1" = "minimal" ];
+elif [ "$1" = "minimal" ]; then
 	MODE=$1
 	BACKUPDIR="/mnt/backup/backup/fnd_minimal"
 else
@@ -34,8 +34,8 @@ mv $BACKUPDIR/alt $BACKUPDIR/current
 mv $BACKUPDIR/tmp $BACKUPDIR/alt
 
 # start sync'ing
-SOURCEDIR="~"
-cd ~/Scripts/backup/
+SOURCEDIR="/home/fnd"
+cd $SOURCEDIR/Scripts/backup/
 if [ "$1" = "full" ]; then
 	rsync -a -e -v --progress $SOURCEDIR $BACKUPDIR/current/ --exclude-from="exclude.lst"
 else
