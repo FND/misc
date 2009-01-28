@@ -18,11 +18,11 @@ function panelPos() {
 
 # command-line parameter
 if [ "x$1" = "xe" ]; then
-	VGAOut true
+	#VGAOut true
 	panelPos true
 	exit
 elif [ "x$1" = "xd" ]; then
-	VGAOut false
+	#VGAOut false
 	panelPos false
 	exit
 fi
@@ -32,11 +32,11 @@ PS3="Secondary screen (VGA out)"
 OPTIONS="enable disable"
 select i in $OPTIONS; do
 	if [ "$i" = "enable" ]; then
-		VGAOut true
+		#VGAOut true
 		panelPos true
 		exit
 	elif [ "$i" = "disable" ]; then
-		VGAOut false
+		#VGAOut false
 		panelPos false
 		exit
 	fi
