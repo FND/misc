@@ -5,6 +5,11 @@
 # * sort out directory structure
 # * optimizations
 
+# mount backup drive
+DEVICE="/dev/sdb2" # TODO: pass in as argument
+sudo umount $DEVICE
+sudo mount $DEVICE /mnt/backup
+
 # check mode
 if [ "$1" = "full" ]; then
 	MODE=$1
@@ -18,7 +23,7 @@ else
 fi
 
 # check backup drive
-if mount | grep 'on /mnt/backup' >/dev/null; then
+if mount | grep "on /mnt/backup" >/dev/null; then
 	echo "starting backup process"
 else
 	echo "ERROR: backup drive not mounted"
