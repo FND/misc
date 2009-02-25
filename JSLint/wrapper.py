@@ -22,7 +22,7 @@ def reformat(text, pattern, filename):
 			line = int(matches.groups()[0])
 			char = int(matches.groups()[1])
 			msg = matches.groups()[2]
-			results.append("%s:%d: [char %d] %s" % (filename, line, char, msg))
+			results.append("%s:%d:%d:%s" % (filename, line, char, msg))
 	return results
 
 if __name__ == "__main__":
