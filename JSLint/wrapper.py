@@ -47,7 +47,7 @@ def reformat(text, pattern, filename):
 
 def setOptions(filename, options):
 	f = open(filename, "r")
-	contents = "/*jslint %s */ %s" % (" ".join(options), f.read())
+	contents = "/*jslint %s */ %s" % (", ".join(options), f.read())
 	f.close()
 	f = open(tempFile, "w")
 	f.write(contents)
