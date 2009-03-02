@@ -1,17 +1,36 @@
+"""
+wrapper for JSLint
+
+reformats output (<filename>:<line>:<column>:<message>)
+allows specifying JSLint options via the command line
+
+Usage:
+  $ wrapper.py <filename> [options]
+options is a collection of individual "<key>:<value>" arguments
+"""
+
 import sys
 import subprocess
 import re
+
 
 # settings -- TODO: read from configuration file
 cmd = "rhino"
 lint = "/home/fnd/Scripts/JSLint/jslint.js"
 pattern = r"Lint at line (\d+) character (\d+): (.*)"
+tempFile = "/tmp/jslint_wrap"
+
 
 def main(args):
-	filename = args[1]
+	original = filename = args[1] # original filename might differ from actually linted file
+	options = args[2:]
+	if options:
+		filename = setOptions(filename, options)
 	command = [cmd, lint, filename]
 	output = subprocess.Popen(command, stdout=subprocess.PIPE).communicate()[0]
-	print "\n".join(reformat(output, pattern, filename))
+	print "\n".join(reformat(output, pattern, original))
+	return True
+
 
 def reformat(text, pattern, filename):
 	results = []
@@ -25,5 +44,17 @@ def reformat(text, pattern, filename):
 			results.append("%s:%d:%d:%s" % (filename, line, char, msg))
 	return results
 
+
+def setOptions(filename, options):
+	f = open(filename, "r")
+	contents = "/*jslint %s */ %s" % (" ".join(options), f.read())
+	f.close()
+	f = open(tempFile, "w")
+	f.write(contents)
+	f.close()
+	return tempFile
+
+
 if __name__ == "__main__":
-	sys.exit(main(sys.argv))
+	status = not main(sys.argv)
+	sys.exit(status)
