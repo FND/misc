@@ -10,10 +10,10 @@ OPTIONS="empty nightly"
 select i in $OPTIONS; do
 	if [ "$i" = "empty" ]; then
 		wget http://www.tiddlywiki.com/empty.html -O $DIR/TiddlyWiki.html
-		xdg-open /tmp/TiddlyWiki.html
+		xdg-open $DIR/TiddlyWiki.html
 	elif [ "$i" = "nightly" ]; then
-		wget http://nightly.tiddlywiki.org/done/nightly.html -O $DIR/TiddlyWiki.html
-		xdg-open /tmp/TiddlyWiki.html
+		wget http://nightly.tiddlywiki.org/done/nightly.html -O $DIR/twnightly.html
+		xdg-open $DIR/twnightly.html
 	fi
 	exit
 done
