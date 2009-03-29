@@ -52,3 +52,13 @@ ENDTIME=$(date +"%Y-%m-%d %H:%M:%S")
 echo "started: $STARTTIME"
 echo "ended  : $ENDTIME"
 echo "start: $STARTTIME - end: $ENDTIME" >> $BACKUPDIR/backup.log
+
+# unmount prompt
+PS3="Unmount backup device?"
+OPTIONS="yes no"
+select i in $OPTIONS; do
+	if [ "$i" = "yes" ]; then
+		sudo umount $DEVICE
+	fi
+	exit
+done
