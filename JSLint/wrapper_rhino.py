@@ -1,12 +1,18 @@
+#!/usr/bin/env python
+
 """
 wrapper for JSLint
+requires Rhino
 
 reformats output (<filename>:<line>:<column>:<message>)
 allows specifying JSLint options via the command line
 
 Usage:
-  $ wrapper.py <filename> [options]
+  $ wrapper_rhino.py <filename> [options]
 options is a collection of individual "<key>:<value>" arguments
+
+TODO:
+* read settings from config file or command-line arguments
 """
 
 import sys
@@ -14,9 +20,9 @@ import subprocess
 import re
 
 
-# settings -- TODO: read from configuration file
+# settings
 cmd = "rhino"
-lint = "/home/fnd/Scripts/JSLint/jslint.js"
+lint = "/home/fnd/Scripts/JSLint/jslint_rhino.js"
 pattern = r"Lint at line (\d+) character (\d+): (.*)"
 tempFile = "/tmp/jslint_wrap"
 
