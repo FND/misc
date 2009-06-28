@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Usage:
 #  rsync.sh <full|minimal>
 #
