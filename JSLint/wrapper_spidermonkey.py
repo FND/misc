@@ -5,11 +5,10 @@ wrapper for JSLint
 requires Spidermonkey
 
 Usage:
-  $ wrapper_spidermonkey.py <filename>
+  $ wrapper_spidermonkey.py <filepath>
 
 TODO:
-* reformat output (<filename>:<line>:<column>:<message>)
-* support JSLINT options
+* reformat output (<filepath>:<line>:<column>:<message>)
 * read settings from config file or command-line arguments
 """
 
@@ -18,7 +17,6 @@ import sys
 import spidermonkey
 
 
-# settings
 lint_path = "/home/fnd/Scripts/JSLint/fulljslint.js"
 
 
@@ -30,28 +28,25 @@ def main(args=None):
 
 
 def lint(filepath):
-	options = "{}" # TODO: read from argument and automate stringification
-
 	rt = spidermonkey.Runtime()
 	ctx = rt.new_context()
 
-	jslint = open(lint_path).read()
-	code = open(filepath).read()
+	options = {} # TODO: read from argument
+	ctx.add_global("options", options)
+	ctx.add_global("getFileContents", get_file_contents)
 
-	code = _escape(code) # required due code being passed as literal string -- TODO: read file contents from within Spidermonkey
-	status = ctx.execute(r'%s JSLINT("%s", %s);' % (jslint, code, options)) # True if clean, False otherwise
-	report = ctx.execute("JSLINT.report();");
+	# load JavaScript code
+	ctx.execute('eval(getFileContents("%s"));' % lint_path)
+	ctx.execute('var code = getFileContents("%s");' % filepath)
+	# lint code
+	status = ctx.execute("JSLINT(code, options);") # True if clean, False otherwise
+	errors = ctx.execute("JSLINT.errors;"); # TODO: return as JSON
 
-	return status, report
+	return status, errors
 
 
-def _escape(code):
-	"""
-	escape line breaks and nested double quotes
-	"""
-	marker = "{%escaped_quote%}"; # XXX: not 100% safe
-	return (code.replace("\n", r"\n").
-		replace(r'\"', marker).replace('"', r'\"').replace(marker, r'\"'))
+def get_file_contents(filepath):
+	return open(filepath).read()
 
 
 if __name__ == "__main__":
