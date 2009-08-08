@@ -1,16 +1,11 @@
 #!/usr/bin/env bash
 
 # Usage:
-#  rsync.sh <full|minimal>
+#  rsync.sh <full|minimal> <device>
 #
 # To Do:
 # * sort out directory structure
 # * optimizations
-
-# mount backup drive
-DEVICE="/dev/sdb2" # TODO: pass in as argument
-sudo umount $DEVICE
-sudo mount $DEVICE /mnt/backup
 
 # check mode
 if [ "$1" = "full" ]; then
@@ -21,15 +16,22 @@ elif [ "$1" = "minimal" ]; then
 	BACKUPDIR="/mnt/backup/backup/fnd_minimal"
 else
 	echo "ERROR: no mode specified"
-	exit
+	exit 1
 fi
+
+# mount backup drive
+DEVICE="$2"
+sudo umount $DEVICE
+sudo mount $DEVICE /mnt/backup || {
+	echo "ERROR: could not mount device";
+	exit 1; }
 
 # check backup drive
 if mount | grep "on /mnt/backup" >/dev/null; then
 	echo "starting backup process"
 else
 	echo "ERROR: backup drive not mounted"
-	exit
+	exit 1
 fi
 
 # log start time
