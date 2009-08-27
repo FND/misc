@@ -1,0 +1,3 @@
+[submodule "todotxt"]
+	path = todotxt
+	url = git://github.com/ginatrapani/todo.txt-cli.git
