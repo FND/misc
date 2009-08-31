@@ -1,3 +1,6 @@
 [submodule "todotxt"]
 	path = todotxt
 	url = git://github.com/ginatrapani/todo.txt-cli.git
+[submodule "jslint-cli"]
+	path = jslint-cli
+	url = git://github.com/FND/jslint-cli.git
