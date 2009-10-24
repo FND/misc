@@ -1,11 +1,12 @@
 Backup/200*-*-*
 
-.local/share/Trash
 Downloads
 
-.tilda/locks
-.config/deluge/torrentfiles
-.macromedia/Flash_Player/
-.adobe/Flash_Player/
+.local/share/Trash
+.thumbnails
 
-.VirtualBox/VDI/
+.adobe/Flash_Player
+.python-eggs
+
+.config/deluge/torrentfiles
+.VirtualBox/VDI
