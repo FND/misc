@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+# Usage:
+#   ./pycoverage <source directory>
+# or
+#   ./pycoverage clean
+
+source_dir=${1:?}
+output_dir="figleaf"
+index="source_modules.txt"
+
+rm -rf .figleaf $index $output_dir
+
+[ "$1" = "clean" ] && exit 0
+
+figleaf `which py.test`
+
+find "$source_dir/" -name "*.py" > $index
+figleaf2html --output-directory="$output_dir" --files-list="$index"
