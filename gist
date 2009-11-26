@@ -10,14 +10,14 @@ uri="http://gist.github.com/gists"
 
 pattern="Location: http:\/\/gist.github.com\/"
 
-id=`curl --verbose \
+id=$(curl --verbose \
 	--request POST \
 	--data "login=$user&token=$token" \
 	--data "file_ext[gistfile1]=$extension&file_name[gistfile1]=$filename" \
 	--data "file_contents[gistfile1]=$description" \
-	$uri | \
-	grep "$pattern" | sed -e "s/$pattern//"`
+	$uri 2>&1 | \
+	grep "$pattern" | sed -e "s/$pattern//")
 	#--data action_button=private # XXX: unused
 
-git remote add gist git@gist.github.com:$id.git
-git push --force gist master
+sleep 2
+git clone git@gist.github.com:$(id).git
