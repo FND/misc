@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Usage:
-#   ./jsmin.sh source [target]
+#   $ jsmin.sh <source> [target]
 
 srcfile=$1
 shift

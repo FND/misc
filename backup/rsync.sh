@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Usage:
-#  rsync.sh <full|minimal> <device>
+#   $ rsync.sh <full|minimal> <device>
 #
 # To Do:
 # * sort out directory structure

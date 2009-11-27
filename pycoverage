@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 
 # Usage:
-#   ./pycoverage <source directory>
+#   $ pycoverage <source directory>
 # or
-#   ./pycoverage clean
+#   $ pycoverage clean
 
 source_dir=${1:?}
 output_dir="figleaf"

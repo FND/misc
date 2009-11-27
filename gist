@@ -1,3 +1,8 @@
+#!/usr/bin/env sh
+
+# Usage
+#   $ gist <filepath> <description>
+
 filepath=${1:?}
 description=${2:?}
 
