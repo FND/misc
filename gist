@@ -11,9 +11,9 @@ extension=${filename##*.}
 
 user=`head -n1 ~/.githubconfig`
 token=`tail -n1 ~/.githubconfig`
-uri="http://gist.github.com/gists"
 
-pattern="Location: http:\/\/gist.github.com\/"
+uri="http://gist.github.com/gists"
+pattern="< Location: http:\/\/gist.github.com\/"
 
 id=$(curl --verbose \
 	--request POST \
@@ -21,8 +21,12 @@ id=$(curl --verbose \
 	--data "file_ext[gistfile1]=$extension&file_name[gistfile1]=$filename" \
 	--data "file_contents[gistfile1]=$description" \
 	$uri 2>&1 | \
-	grep "$pattern" | sed -e "s/$pattern//")
+	grep "$pattern" | sed -e "s/$pattern//" -e "s/\r//")
 	#--data action_button=private # XXX: unused
 
+echo "submitted data; cloning repository"
+
 sleep 2
-git clone git@gist.github.com:$(id).git
+uri="git@gist.github.com:$id.git"
+git clone $uri gist_$id || \
+	echo "could not clone Gist repository: $uri"
