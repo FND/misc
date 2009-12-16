@@ -25,6 +25,7 @@ id=$(curl --verbose \
 	#--data action_button=private # XXX: unused
 
 echo "submitted data; cloning repository"
+echo "http://gist.github.com/$id"
 
 sleep 2
 uri="git@gist.github.com:$id.git"
