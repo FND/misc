@@ -2,7 +2,7 @@
 # * prompt for confirmation when >140 chars
 # * handle special chars (e.g. quotes, plus etc.)
 
-uri="http://twitter.com/statuses/update.xml"
+uri="http://twitter.com/statuses/update.json"
 
 username=$1
 shift
@@ -25,4 +25,4 @@ elif [ ${#msg} -gt 140 ]; then
     done
 fi
 echo "Posting: $msg (${#msg} characters)"
-curl -u $username:$password -d status="$msg" $uri
+curl -u $username:$password -d status="$msg" $uri | python -m json.tool
