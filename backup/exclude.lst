@@ -3,10 +3,11 @@ Backup/200*-*-*
 Downloads
 
 .local/share/Trash
+.cache
+.cpan
 .thumbnails
 
 .adobe/Flash_Player
-.python-eggs
 
 .config/deluge/torrentfiles
 .VirtualBox/VDI
