@@ -7,12 +7,12 @@ filepath=${1:?}
 description=${2:?}
 
 filename=$(basename $filepath)
-extension=${filename##*.}
+extension=txt # XXX: unused!?
 
 user=`head -n1 ~/.githubconfig`
 token=`tail -n1 ~/.githubconfig`
 
-uri="http://gist.github.com/gists"
+url="http://gist.github.com/gists"
 pattern="< Location: http:\/\/gist.github.com\/"
 
 id=$(curl --verbose \
@@ -20,14 +20,20 @@ id=$(curl --verbose \
 	--data "login=$user&token=$token" \
 	--data "file_ext[gistfile1]=$extension&file_name[gistfile1]=$filename" \
 	--data "file_contents[gistfile1]=$description" \
-	$uri 2>&1 | \
+	$url 2>&1 | \
 	grep "$pattern" | sed -e "s/$pattern//" -e "s/\r//")
 	#--data action_button=private # XXX: unused
 
-echo "submitted data; cloning repository"
-echo "http://gist.github.com/$id"
+url="http://gist.github.com/$id"
+echo "created $url; cloning repository"
 
 sleep 2
 uri="git@gist.github.com:$id.git"
-git clone $uri gist_$id || \
+path="gist_$id"
+git clone $uri $path || \
 	echo "could not clone Gist repository: $uri"
+
+cd $path && rm $filename && ln ../$filename && \
+	git commit -a -m "inital commit" && \
+	git push && \
+echo "cloned $url in directory $path"
