@@ -7,7 +7,7 @@ echo "installing $package in $directory"
 
 # automatically adjust relative path for tarballs in CWD
 token=`echo $package | sed -e "s/^[^./].*\.tar\.gz$//"`
-if [ -z "$token" ]; then
+if [ -z $token ]; then
 	package="../${package}"
 fi
 

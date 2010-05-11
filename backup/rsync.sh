@@ -7,6 +7,9 @@
 # * sort out directory structure
 # * optimizations
 
+#set -e
+set -x
+
 # check mode
 if [ "$1" = "full" ]; then
 	MODE=$1

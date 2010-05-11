@@ -2,7 +2,7 @@
 
 filename=${1:?}
 
-tmpfile="/tmp/validtor$$.html"
+tmpfile="/tmp/validator$$.html"
 
 echo "validating $filename..."
 curl -X POST -F uploaded_file=@"$filename" -F charset="(detect automatically)" \
