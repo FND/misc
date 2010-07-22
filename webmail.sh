@@ -1,12 +1,46 @@
 #!/usr/bin/env sh
 
+set -e
 set -x
 
 url=${1:?}
 host=${2:?}
 email=${3:?}
+sender=${4:?}
 
-cmd="wget -q -O - $url | uuencode doc.html | \
-	{ echo $url; echo; cat -; } | \
-	mailx -s $url $email"
-ssh $host $cmd
+tempdir="/tmp/mail$$.tmp"
+attachment="doc.html"
+
+recipient=$email
+subject=$url
+body=$url
+
+boundary="GvXjxJ+pjyke8COw"
+
+mkdir -p $tempdir
+cd $tempdir
+wget -q -O $attachment $url
+
+{
+	echo "From: $sender";
+	echo "To: $recipient";
+	echo "Subject: $subject";
+	echo "Mime-Version: 1.0";
+	echo "Content-Type: multipart/mixed; boundary=\"$boundary\"";
+	echo "Content-Disposition: inline";
+	echo "--$boundary";
+	echo "Content-Type: text/plain";
+	echo "Content-Disposition: inline";
+	echo "";
+	echo "$body";
+	echo "";
+	echo "";
+	echo "--$boundary";
+	echo "Content-Type: text/html";
+	echo "Content-Disposition: attachement; filename=$attachment";
+	echo "";
+	echo "";
+	cat $attachment;
+} | ssh $host /usr/lib/sendmail -t
+
+rm -r $tempdir
