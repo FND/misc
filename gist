@@ -34,6 +34,6 @@ git clone $uri $path || \
 	echo "could not clone Gist repository: $uri"
 
 cd $path && rm $filename && ln ../$filename && \
-	git commit -a -m "inital commit" && \
+	git commit -a -m "initial commit" && \
 	git push && \
 echo "cloned $url in directory $path"
