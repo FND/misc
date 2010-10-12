@@ -4,6 +4,3 @@
 [submodule "jslint-cli"]
 	path = jslint-cli
 	url = git://github.com/FND/jslint-cli.git
-[submodule "twikrad"]
-	path = twikrad
-	url = git://github.com/cdent/twikrad.git
