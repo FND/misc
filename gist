@@ -12,8 +12,8 @@ extension=txt # XXX: unused!?
 user=`head -n1 ~/.githubconfig`
 token=`tail -n1 ~/.githubconfig`
 
-url="http://gist.github.com/gists"
-pattern="< Location: http:\/\/gist.github.com\/"
+url="https://gist.github.com/gists"
+pattern="< Location: https:\/\/gist.github.com\/"
 
 id=$(curl --verbose \
 	--request POST \
@@ -24,7 +24,7 @@ id=$(curl --verbose \
 	grep "$pattern" | sed -e "s/$pattern//" -e "s/\r//")
 	#--data action_button=private # XXX: unused
 
-url="http://gist.github.com/$id"
+url="https://gist.github.com/$id"
 echo "created $url; cloning repository"
 
 sleep 2
