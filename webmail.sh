@@ -28,6 +28,8 @@ wget -q -O $attachment $url
 	echo "Mime-Version: 1.0";
 	echo "Content-Type: multipart/mixed; boundary=\"$boundary\"";
 	echo "Content-Disposition: inline";
+	echo "";
+	echo "This is a multi-part message in MIME format.";
 	echo "--$boundary";
 	echo "Content-Type: text/plain";
 	echo "Content-Disposition: inline";
@@ -37,10 +39,12 @@ wget -q -O $attachment $url
 	echo "";
 	echo "--$boundary";
 	echo "Content-Type: text/html";
-	echo "Content-Disposition: attachement; filename=$attachment";
+	echo "Content-Disposition: attachment; filename=\"$attachment\"";
 	echo "";
 	echo "";
 	cat $attachment;
+	echo "";
+	echo "--$boundary";
 } | ssh $host /usr/lib/sendmail -t
 
 rm -r $tempdir
