@@ -1,5 +1,10 @@
 #!/usr/bin/env sh
 
+# send a web page as e-mail attachment
+#
+# Usage:
+#  ./webmail.sh URL host recipient sender
+
 set -e
 set -x
 
@@ -12,7 +17,7 @@ tempdir="/tmp/mail$$.tmp"
 attachment="doc.html"
 
 recipient=$email
-subject=$url
+subject="[read] $url"
 body=$url
 
 boundary="GvXjxJ+pjyke8COw"
@@ -20,6 +25,16 @@ boundary="GvXjxJ+pjyke8COw"
 mkdir -p $tempdir
 cd $tempdir
 wget -q -O $attachment $url
+
+# use page title if available
+title=`grep "<title>" $attachment | head -n1 | \
+	sed -e "s#</\?title>##g" -e "s/^\s*\|\s*$//g" -e "s/[^0-9a-zA-Z]/_/g"` # XXX: brittle; breaks for multi-line titles, uppercase tags
+if [ -n "$title" ]; then
+	subject="[read] $title"
+	newfile="${attachment}_${title}"
+	mv $attachment "$newfile"
+	attachment="$newfile"
+fi
 
 {
 	echo "From: $sender";
