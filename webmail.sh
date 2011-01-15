@@ -27,11 +27,12 @@ cd $tempdir
 wget -q -O $attachment $url
 
 # use page title if available
-title=`grep "<title>" $attachment | head -n1 | \
-	sed -e "s#</\?title>##g" -e "s/^\s*\|\s*$//g" -e "s/[^0-9a-zA-Z]/_/g"` # XXX: brittle; breaks for multi-line titles, uppercase tags
+title=`grep -o "<title>.*</title>" $attachment | head -n1 | \
+	sed -e "s#</\?title>##g" -e "s/^\s*\|\s*$//g" -e "s/[^0-9a-zA-Z]/_/g" | \
+	cut -c 1-72` # XXX: brittle; breaks for multi-line titles, uppercase tags
 if [ -n "$title" ]; then
 	subject="[read] $title"
-	newfile="${attachment}_${title}"
+	newfile="doc_${title}.html"
 	mv $attachment "$newfile"
 	attachment="$newfile"
 fi
