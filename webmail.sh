@@ -6,7 +6,6 @@
 #  ./webmail.sh URL host recipient sender
 
 set -e
-set -x
 
 url=${1:?}
 host=${2:?}
@@ -64,3 +63,5 @@ fi
 } | ssh $host /usr/lib/sendmail -t
 
 rm -r $tempdir
+
+echo "$subject"
