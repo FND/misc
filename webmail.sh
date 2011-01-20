@@ -16,7 +16,7 @@ tempdir="/tmp/mail$$.tmp"
 attachment="doc.html"
 
 recipient=$email
-subject="[read] $url"
+subject="$url"
 body=$url
 
 boundary="GvXjxJ+pjyke8COw"
@@ -27,11 +27,12 @@ wget -q -O $attachment $url
 
 # use page title if available
 title=`grep -o "<title>.*</title>" $attachment | head -n1 | \
-	sed -e "s#</\?title>##g" -e "s/^\s*\|\s*$//g" -e "s/[^0-9a-zA-Z]/_/g" | \
+	sed -e "s#</\?title>##g" -e "s/^\s*\|\s*$//g" | \
 	cut -c 1-72` # XXX: brittle; breaks for multi-line titles, uppercase tags
 if [ -n "$title" ]; then
-	subject="[read] $title"
+	subject="$title"
 	newfile="doc_${title}.html"
+	newfile=`echo $newfile | sed -e "s/[^0-9a-zA-Z-]/_/g"`
 	mv $attachment "$newfile"
 	attachment="$newfile"
 fi
@@ -39,7 +40,7 @@ fi
 {
 	echo "From: $sender";
 	echo "To: $recipient";
-	echo "Subject: $subject";
+	echo "Subject: [read] $subject";
 	echo "Mime-Version: 1.0";
 	echo "Content-Type: multipart/mixed; boundary=\"$boundary\"";
 	echo "Content-Disposition: inline";
