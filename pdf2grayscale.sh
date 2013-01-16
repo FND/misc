@@ -18,6 +18,15 @@ fi
 source_file="${1:?}"
 target_dir="${2:?}"
 
+if [ ! -f "$source_file" ]; then
+	echo "ERROR: $source_file is not a file"
+	exit 1
+fi
+if [ ! -d "$target_dir" ]; then
+	echo "ERROR: $target_dir is not a directory"
+	exit 1
+fi
+
 target_dir="`echo $target_dir | sed 's#/\+$##'`" # strip trailing slashes
 temp_file="$target_dir/`basename $source_file .pdf`.ps"
 target_file="$target_dir/`basename $temp_file .ps`.pdf"
