@@ -1,6 +1,8 @@
 Backup/200*-*-*
 
 Downloads
+Media/audiobooks
+games
 
 .local/share/Trash
 .cache
@@ -11,5 +13,7 @@ Downloads
 
 .config/deluge/torrentfiles
 .VirtualBox/VDI
+.VirtualBox/HardDisks
+VirtualBox VMs
 
-bin
+ubuntu

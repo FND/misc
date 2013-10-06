@@ -8,7 +8,7 @@
 # * optimizations
 
 #set -e
-set -x
+#set -x
 
 # check mode
 if [ "$1" = "full" ]; then
@@ -24,7 +24,7 @@ fi
 
 # mount backup drive
 DEVICE="$2"
-sudo umount $DEVICE
+sudo umount $DEVICE || true
 sudo mount $DEVICE /mnt/backup || {
 	echo "ERROR: could not mount device";
 	exit 1; }
@@ -53,6 +53,9 @@ if [ "$1" = "full" ]; then
 else
 	rsync -a -e -v --progress $SOURCEDIR $BACKUPDIR/current/ --include-from="include.lst"
 fi
+
+# display disk usage (remaining space)
+df -h | grep "Filesystem\|$DEVICE"
 
 # log end time and duration
 ENDTIME=$(date +"%Y-%m-%d %H:%M:%S")
