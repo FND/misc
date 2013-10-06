@@ -27,11 +27,26 @@ if [ ! -d "$target_dir" ]; then
 	exit 1
 fi
 
+filename="`basename $source_file .pdf`"
 target_dir="`echo $target_dir | sed 's#/\+$##'`" # strip trailing slashes
-temp_file="$target_dir/`basename $source_file .pdf`.ps"
-target_file="$target_dir/`basename $temp_file .ps`.pdf"
+temp_dir="$target_dir/pdf_grayscale$$"
+mkdir "$temp_dir"
 
-pdf2ps -sDEVICE=psgray "$source_file" "$temp_file"
-ps2pdf "$temp_file" "$target_file"
-rm "$temp_file"
-echo "$target_file"
+pdfseparate "$source_file" "$temp_dir/${filename}-%d.pdf"
+for pdf in `ls $temp_dir`; do
+	pdf="$temp_dir/$pdf"
+	temp_file="${pdf}.ps"
+	target_file="$temp_dir/`basename $temp_file .ps`.pdf"
+	echo "converting PDF to PS: $pdf -> $temp_file" # XXX: DEBUG
+	pdftoppm -png "$pdf" > "$temp_file"
+	convert "$temp_file" -set colorspace Gray -separate -average "$target_file"
+	rm "$temp_file" "$pdf"
+done
+
+target_file="$target_dir/${filename}.pdf"
+pdfunite "$temp_dir/"*.pdf "$target_file"
+echo "done: $target_file"
+
+# XXX: obsolete
+#pdf2ps -sDEVICE=psgray -dProcessColorModel=/DeviceGray -sColorConversionStrategy=Gray "$source_file" "$temp_file"
+#ps2pdf "$temp_file" "$target_file"
